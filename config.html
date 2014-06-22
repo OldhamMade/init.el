@@ -1,0 +1,2868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Emacs Configuration</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Emacs Configuration"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2014-03-05T11:07+0000"/>
+<meta name="author" content="Phillip B Oldham"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" href="init.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Emacs Configuration</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Introduction</a>
+<ul>
+<li><a href="#sec-1-1">1.1 Generation and Usage</a></li>
+<li><a href="#sec-1-2">1.2 Licensing</a></li>
+<li><a href="#sec-1-3">1.3 Todo</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Contents</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Startup Tweaks</a></li>
+<li><a href="#sec-2-2">2.2 Package Management</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1 Sources</a></li>
+<li><a href="#sec-2-2-2">2.2.2 Install <code>req-package</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3">2.3 Basic Settings</a></li>
+<li><a href="#sec-2-4">2.4 Performance</a></li>
+<li><a href="#sec-2-5">2.5 Interface</a>
+<ul>
+<li><a href="#sec-2-5-1">2.5.1 Theme</a></li>
+<li><a href="#sec-2-5-2">2.5.2 Recursive Editing</a></li>
+<li><a href="#sec-2-5-3">2.5.3 Cursor</a></li>
+<li><a href="#sec-2-5-4">2.5.4 Log messages</a></li>
+<li><a href="#sec-2-5-5">2.5.5 Uniquify buffer names</a></li>
+<li><a href="#sec-2-5-6">2.5.6 Modeline</a></li>
+<li><a href="#sec-2-5-7">2.5.7 Line Numbers</a></li>
+<li><a href="#sec-2-5-8">2.5.8 Mouse/Scrolling</a></li>
+<li><a href="#sec-2-5-9">2.5.9 Highlight syntax</a></li>
+<li><a href="#sec-2-5-10">2.5.10 Highlight regions</a></li>
+<li><a href="#sec-2-5-11">2.5.11 Highlight indentation</a></li>
+<li><a href="#sec-2-5-12">2.5.12 Highlight delimiters</a></li>
+<li><a href="#sec-2-5-13">2.5.13 Highlight text that flows past column 80</a></li>
+<li><a href="#sec-2-5-14">2.5.14 Highlight colour references with it's colour</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-6">2.6 Navigation</a>
+<ul>
+<li><a href="#sec-2-6-1">2.6.1 Minibuffer Shortcuts</a></li>
+<li><a href="#sec-2-6-2">2.6.2 Open recently opened files quickly</a></li>
+<li><a href="#sec-2-6-3">2.6.3 IDO</a></li>
+<li><a href="#sec-2-6-4">2.6.4 Smex</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-7">2.7 Buffers</a>
+<ul>
+<li><a href="#sec-2-7-1">2.7.1 New Empty Buffer</a></li>
+<li><a href="#sec-2-7-2">2.7.2 Indent Whole Buffer</a></li>
+<li><a href="#sec-2-7-3">2.7.3 Kill all buffers except current</a></li>
+<li><a href="#sec-2-7-4">2.7.4 Switching buffers</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-8">2.8 Files</a>
+<ul>
+<li><a href="#sec-2-8-1">2.8.1 Copy Filename to Clipboard</a></li>
+<li><a href="#sec-2-8-2">2.8.2 Open Filename with External Program</a></li>
+<li><a href="#sec-2-8-3">2.8.3 Rename File and Buffer</a></li>
+<li><a href="#sec-2-8-4">2.8.4 Move File and Buffer</a></li>
+<li><a href="#sec-2-8-5">2.8.5 Reloading</a></li>
+<li><a href="#sec-2-8-6">2.8.6 Autosaves and Backups</a></li>
+<li><a href="#sec-2-8-7">2.8.7 Saving</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-9">2.9 Moving Around</a>
+<ul>
+<li><a href="#sec-2-9-1">2.9.1 By symbol</a></li>
+<li><a href="#sec-2-9-2">2.9.2 By indentation</a></li>
+<li><a href="#sec-2-9-3">2.9.3 By word</a></li>
+<li><a href="#sec-2-9-4">2.9.4 By last change</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-10">2.10 Editing</a>
+<ul>
+<li><a href="#sec-2-10-1">2.10.1 Showing changes</a></li>
+<li><a href="#sec-2-10-2">2.10.2 Tabs</a></li>
+<li><a href="#sec-2-10-3">2.10.3 Selecting</a></li>
+<li><a href="#sec-2-10-4">2.10.4 Moving text</a></li>
+<li><a href="#sec-2-10-5">2.10.5 Overwriting</a></li>
+<li><a href="#sec-2-10-6">2.10.6 Undo</a></li>
+<li><a href="#sec-2-10-7">2.10.7 CUA</a></li>
+<li><a href="#sec-2-10-8">2.10.8 Auto-pair braces</a></li>
+<li><a href="#sec-2-10-9">2.10.9 Changing Case</a></li>
+<li><a href="#sec-2-10-10">2.10.10 Sort lines, case insensitive</a></li>
+<li><a href="#sec-2-10-11">2.10.11 Replace string, case sensitive</a></li>
+<li><a href="#sec-2-10-12">2.10.12 Fix/replace "Smart Quotes"</a></li>
+<li><a href="#sec-2-10-13">2.10.13 Remove <sup>M</sup></a></li>
+<li><a href="#sec-2-10-14">2.10.14 Wrap region</a></li>
+<li><a href="#sec-2-10-15">2.10.15 Edit multiple regions at the same time</a></li>
+<li><a href="#sec-2-10-16">2.10.16 Rename SGML tag</a></li>
+<li><a href="#sec-2-10-17">2.10.17 Zen-coding</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-11">2.11 Search/replace</a>
+<ul>
+<li><a href="#sec-2-11-1">2.11.1 Showing search results</a></li>
+<li><a href="#sec-2-11-2">2.11.2 Regex search/replace</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-12">2.12 Checking</a>
+<ul>
+<li><a href="#sec-2-12-1">2.12.1 Flycheck</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-13">2.13 Killing</a>
+<ul>
+<li><a href="#sec-2-13-1">2.13.1 Browse Kill Ring</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-14">2.14 Windows</a>
+<ul>
+<li><a href="#sec-2-14-1">2.14.1 Workgroups</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-15">2.15 Version Control</a>
+<ul>
+<li><a href="#sec-2-15-1">2.15.1 Seeing changes when working with Git</a></li>
+<li><a href="#sec-2-15-2">2.15.2 Magit for working with Git</a></li>
+<li><a href="#sec-2-15-3">2.15.3 Monky for working with Mercirual</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-16">2.16 Terminal</a>
+<ul>
+<li><a href="#sec-2-16-1">2.16.1 Colours</a></li>
+<li><a href="#sec-2-16-2">2.16.2 ZSH</a></li>
+<li><a href="#sec-2-16-3">2.16.3 Managing Multiple Terminal instances</a></li>
+<li><a href="#sec-2-16-4">2.16.4 Tramp</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-17">2.17 Dired</a></li>
+<li><a href="#sec-2-18">2.18 Org</a>
+<ul>
+<li><a href="#sec-2-18-1">2.18.1 Bullets</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-19">2.19 Key bindings</a>
+<ul>
+<li><a href="#sec-2-19-1">2.19.1 Mac</a></li>
+<li><a href="#sec-2-19-2">2.19.2 Key chords</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-20">2.20 Programming</a>
+<ul>
+<li><a href="#sec-2-20-1">2.20.1 Common</a></li>
+<li><a href="#sec-2-20-2">2.20.2 Python</a></li>
+<li><a href="#sec-2-20-3">2.20.3 XML</a></li>
+<li><a href="#sec-2-20-4">2.20.4 XSL-FO</a></li>
+<li><a href="#sec-2-20-5">2.20.5 XQuery</a></li>
+<li><a href="#sec-2-20-6">2.20.6 YAML</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-21">2.21 Utilities</a>
+<ul>
+<li><a href="#sec-2-21-1">2.21.1 Find convenient unbound keystrokes</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-22">2.22 Finalising</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+This is the Emacs environment I (Phillip B Oldham) use for development. This file is
+a literate programming document written with org-mode and org-mode-babel. You can
+view init.html in a web browser, or read init.org in Emacs.
+</p>
+<p>
+I generally only use Emacs on OS X, so there is a lot of customization around that OS
+focussed on the railwaycat emacs port: <a href="https://github.com/railwaycat/emacs-mac-port">https://github.com/railwaycat/emacs-mac-port</a>.
+</p>
+<p>
+Inspiration has been taking from the following sources:
+</p>
+<ul>
+<li><a href="http://www.wilfred.me.uk/.emacs.d/init.org">http://www.wilfred.me.uk/.emacs.d/init.org</a>
+</li>
+<li><a href="http://dl.dropboxusercontent.com/u/3968124/sacha-emacs.html">http://dl.dropboxusercontent.com/u/3968124/sacha-emacs.html</a>
+</li>
+<li><a href="https://github.com/jhenahan/emacs.d/blob/master/init.org">https://github.com/jhenahan/emacs.d/blob/master/init.org</a>
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Generation and Usage</h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+<p>
+init.org is the source file containing my preferences and settings. init.el and
+init.html are generated from it.
+</p>
+
+
+
+
+<pre class="example">(require 'cl)
+(require 'org)
+(defun export-init-org ()
+  "Generate init.html and init.html from the current init.org file."
+  (interactive)
+  (call-interactively 'org-babel-tangle)
+  (call-interactively 'org-export-as-html))
+</pre>
+
+
+
+<p>
+To facilitate in formatting the init.html file, assign a CSS file.
+</p>
+
+
+
+
+<pre class="example">(setq org-export-html-style-extra "&lt;link rel=\"stylesheet\" href=\"init.css\" /&gt;")
+</pre>
+
+
+<p>
+TODO:
+Add the following javascript items:
+</p>
+
+
+<pre class="example">&lt;script src="//yandex.st/highlightjs/8.0/highlight.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Licensing</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+<p>
+Code I've written (this org file, init.el, and files in `personal`) is MIT licensed.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Todo</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<p>Things to add into this config, and modes to learn to use effectively:
+</p>
+<ul>
+<li>dired+
+</li>
+<li>exec-path-from-shell
+</li>
+</ul>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Contents</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Startup Tweaks</h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<p>
+Stop the start screen from displaying
+</p>
+
+
+
+<pre class="example">(setq inhibit-startup-message t)
+</pre>
+
+
+
+<p>
+Hide the unused toolbar
+</p>
+
+
+
+<pre class="example">(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+</pre>
+
+
+
+<p>
+Hide scrollbars
+</p>
+
+
+
+<pre class="example">(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+</pre>
+
+
+
+<p>
+Kill the annoying bell
+</p>
+
+
+
+<pre class="example">(setq visible-bell t)
+</pre>
+
+
+
+<p>
+Don't insert instructions in the <b>scratch</b> buffer
+</p>
+
+
+
+<pre class="example">(setq initial-scratch-message nil)
+</pre>
+
+
+
+<p>
+Allow answering 'Yes or No' prompts with Y or N
+</p>
+
+
+
+<pre class="example">(fset 'yes-or-no-p 'y-or-n-p)
+</pre>
+
+
+<p>
+Set the exec path from shell on mac systems
+</p>
+
+
+
+<pre class="example">(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Package Management</h3>
+<div class="outline-text-3" id="text-2-2">
+
+
+</div>
+
+<div id="outline-container-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> Sources</h4>
+<div class="outline-text-4" id="text-2-2-1">
+
+
+<p>
+I use ELPA packages heavily for functionality, primarily the MELPA and Marmalade
+repositories. Initalize all the package repos here, so we can use them later.
+</p>
+
+
+
+
+<pre class="example">(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize)
+</pre>
+
+
+
+
+
+<pre class="example">(package-refresh-contents)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> Install <code>req-package</code></h4>
+<div class="outline-text-4" id="text-2-2-2">
+
+
+<p>
+req-package is a macro wrapper on top of use-package. It's goal is to simplify
+package dependencies management.
+</p>
+
+
+
+
+<pre class="example">(unless (package-installed-p 'req-package)
+  (package-install 'req-package))
+(package-initialize)
+(require 'req-package)
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Basic Settings</h3>
+<div class="outline-text-3" id="text-2-3">
+
+
+<p>
+Some very basic settings for my environment
+</p>
+
+
+
+<pre class="example">(setq user-full-name "Phillip B Oldham"
+      user-mail-address "phillip.oldham@gmail.com"
+      change-log-default-name "CHANGELOG")
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Performance</h3>
+<div class="outline-text-3" id="text-2-4">
+
+
+<p>
+Emacs will run garbage collection after `gc-cons-threshold' bytes of
+consing. The default value is 800,000 bytes, or ~ 0.7 MiB. By
+increasing to 20 MiB we reduce the number of pauses due to 
+garbage collection, and will help plugins like flx perform much
+faster.
+</p>
+
+
+
+<pre class="example">(setq gc-cons-threshold 20000000)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Interface</h3>
+<div class="outline-text-3" id="text-2-5">
+
+
+</div>
+
+<div id="outline-container-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> Theme</h4>
+<div class="outline-text-4" id="text-2-5-1">
+
+
+<p>
+I prefer darker themes as they're easier on my eyes.
+</p>
+
+
+
+
+<pre class="example">(add-to-list 'custom-theme-load-path (expand-file-name "themes" dotfiles-dir))
+(load-theme 'leiptr)
+</pre>
+
+
+<p>
+I also prefer a smaller font, to get more text onto the screen.
+</p>
+
+
+
+<pre class="example">(set-face-attribute 'default nil :font "Monaco-10:weight=normal")
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2"><span class="section-number-4">2.5.2</span> Recursive Editing</h4>
+<div class="outline-text-4" id="text-2-5-2">
+
+
+<p>
+We can make the minibuffer much more useful by enabling recursive
+usage. This means that when the minibuffer is active we can still call
+commands that require the minibuffer.
+</p>
+
+
+
+
+<pre class="example">(setq enable-recursive-minibuffers t)
+</pre>
+
+
+
+<p>
+It's easy to lose track of whether we're in a recursive minibuffer or
+not. We display the recursion level in the minibuffer to avoid confusion.
+</p>
+
+
+
+
+<pre class="example">(minibuffer-depth-indicate-mode 1)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3"><span class="section-number-4">2.5.3</span> Cursor</h4>
+<div class="outline-text-4" id="text-2-5-3">
+
+
+<p>
+Disable the cursor blink as I find it distracting at times
+</p>
+
+
+
+<pre class="example">(blink-cursor-mode -1)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-4" class="outline-4">
+<h4 id="sec-2-5-4"><span class="section-number-4">2.5.4</span> Log messages</h4>
+<div class="outline-text-4" id="text-2-5-4">
+
+
+<p>
+Reduce the message log to 512 entries
+</p>
+
+
+
+<pre class="example">(setq message-log-max 512)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-5" class="outline-4">
+<h4 id="sec-2-5-5"><span class="section-number-4">2.5.5</span> Uniquify buffer names</h4>
+<div class="outline-text-4" id="text-2-5-5">
+
+
+
+
+
+<pre class="example">(req-package uniquify
+             :diminish ""
+             :init
+             (progn
+                (setq uniquify-buffer-name-style 'forward)
+                ))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-6" class="outline-4">
+<h4 id="sec-2-5-6"><span class="section-number-4">2.5.6</span> Modeline</h4>
+<div class="outline-text-4" id="text-2-5-6">
+
+<p>I prefer the cleaner Powerline to the usual modeline.
+</p>
+
+
+
+<pre class="example">(req-package powerline
+             :diminish ""
+             :init (powerline-default-theme))
+</pre>
+
+
+<p>
+Reduce the amount of rubbish in the modeline&hellip;
+</p>
+
+
+
+<pre class="example">(add-hook 'emacs-lisp-mode-hook 
+  (lambda()
+    (setq mode-name "el")))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-7" class="outline-4">
+<h4 id="sec-2-5-7"><span class="section-number-4">2.5.7</span> Line Numbers</h4>
+<div class="outline-text-4" id="text-2-5-7">
+
+<p>Turn line-numbers on everywhere.
+</p>
+
+
+
+<pre class="example">(global-linum-mode 1)
+(setq linum-format "%4d")
+(setq column-number-mode 1)
+</pre>
+
+
+
+<p>
+Allow clicking the line-numbers to select the line(s)
+</p>
+
+
+
+<pre class="example">(defun line-at-click ()
+  (save-excursion
+  (let ((click-y (cdr (cdr (mouse-position))))
+      (line-move-visual-store line-move-visual))
+    (setq line-move-visual t)
+    (goto-char (window-start))
+    (next-line (1- click-y))
+    (setq line-move-visual line-move-visual-store)
+    (1+ (line-number-at-pos)))))
+
+(defun md-select-linum ()
+  (interactive)
+  (goto-line (line-at-click))
+  (set-mark (point))
+  (setq *linum-mdown-line*
+    (line-number-at-pos)))
+
+(defun mu-select-linum ()
+  (interactive)
+  (when *linum-mdown-line*
+  (let (mu-line)
+    (setq mu-line (line-at-click))
+    (goto-line (max *linum-mdown-line* mu-line))
+    (set-mark (line-end-position))
+    (goto-line (min *linum-mdown-line* mu-line))
+    (setq *linum-mdown*
+      nil))))
+
+(global-set-key (kbd "&lt;left-margin&gt; &lt;down-mouse-1&gt;") 'md-select-linum)
+(global-set-key (kbd "&lt;left-margin&gt; &lt;mouse-1&gt;") 'mu-select-linum)
+(global-set-key (kbd "&lt;left-margin&gt; &lt;S-mouse-1&gt;") 'mu-select-linum)
+(global-set-key (kbd "&lt;left-margin&gt; &lt;drag-mouse-1&gt;") 'mu-select-linum)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-8" class="outline-4">
+<h4 id="sec-2-5-8"><span class="section-number-4">2.5.8</span> Mouse/Scrolling</h4>
+<div class="outline-text-4" id="text-2-5-8">
+
+
+<p>
+Allow scrolling during incremental search
+</p>
+
+
+
+<pre class="example">(setq isearch-allow-scroll t)
+</pre>
+
+
+
+<p>
+Scroll by 1 line at the end of the file
+</p>
+
+
+
+<pre class="example">(setq scroll-step 1
+      scroll-conservatively 10000)
+</pre>
+
+
+
+<p>
+Enable mouse-wheel where available, set it to scroll one line at a time, 
+and disable acceleration to make it less "jumpy"
+</p>
+
+
+
+<pre class="example">(mouse-wheel-mode t)
+(setq mouse-wheel-scroll-amount '(1))
+(setq mouse-wheel-progressive-speed nil)
+</pre>
+
+
+
+<p>
+Scroll the window under mouse
+</p>
+
+
+
+<pre class="example">(setq mouse-wheel-follow-mouse 't)
+</pre>
+
+
+
+<p>
+Emacs does not seem to handle all scroll events on OSX, therefore inertia
+scrolling does not work properly. The following is a close approximation.
+</p>
+
+
+
+<pre class="example">(setq redisplay-dont-pause t)
+(defun up-single () (interactive) (scroll-up 1))
+(defun down-single () (interactive) (scroll-down 1))
+(defun up-double () (interactive) (scroll-up 2))
+(defun down-double () (interactive) (scroll-down 2))
+(defun up-triple () (interactive) (scroll-up 5))
+(defun down-triple () (interactive) (scroll-down 5))
+
+(global-set-key [wheel-down] 'up-single)
+(global-set-key [wheel-up] 'down-single)
+(global-set-key [double-wheel-down] 'up-double)
+(global-set-key [double-wheel-up] 'down-double)
+(global-set-key [triple-wheel-down] 'up-triple)
+(global-set-key [triple-wheel-up] 'down-triple)
+</pre>
+
+
+<p>
+Enable shift-click for region selection selection
+</p>
+
+
+
+<pre class="example">(define-key global-map (kbd "&lt;S-down-mouse-1&gt;") 'ignore) ; turn off font dialog
+(define-key global-map (kbd "&lt;S-mouse-1&gt;") 'mouse-set-point)
+(define-key global-map (kbd "&lt;S-down-mouse-1&gt;") 'mouse-save-then-kill)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-9" class="outline-4">
+<h4 id="sec-2-5-9"><span class="section-number-4">2.5.9</span> Highlight syntax</h4>
+<div class="outline-text-4" id="text-2-5-9">
+
+
+<p>
+Turn syntax highlighting on by default
+</p>
+
+
+
+<pre class="example">(global-font-lock-mode 1)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-10" class="outline-4">
+<h4 id="sec-2-5-10"><span class="section-number-4">2.5.10</span> Highlight regions</h4>
+<div class="outline-text-4" id="text-2-5-10">
+
+
+<p>
+Highlight regions/selections
+</p>
+
+
+
+<pre class="example">(setq transient-mark-mode t)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-11" class="outline-4">
+<h4 id="sec-2-5-11"><span class="section-number-4">2.5.11</span> Highlight indentation</h4>
+<div class="outline-text-4" id="text-2-5-11">
+
+
+<p>
+FIXME
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-12" class="outline-4">
+<h4 id="sec-2-5-12"><span class="section-number-4">2.5.12</span> Highlight delimiters</h4>
+<div class="outline-text-4" id="text-2-5-12">
+
+
+
+
+
+<pre class="example">(req-package rainbow-delimiters
+             :diminish ""
+             :init
+             (progn
+               (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+               (add-hook 'python-mode-hook 'rainbow-delimiters-mode)
+               ))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-13" class="outline-4">
+<h4 id="sec-2-5-13"><span class="section-number-4">2.5.13</span> Highlight text that flows past column 80</h4>
+<div class="outline-text-4" id="text-2-5-13">
+
+
+
+
+
+<pre class="example">(req-package column-enforce-mode
+             :diminish ""
+             :init (add-hook 'python-mode-hook 'column-enforce-mode))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-5-14" class="outline-4">
+<h4 id="sec-2-5-14"><span class="section-number-4">2.5.14</span> Highlight colour references with it's colour</h4>
+<div class="outline-text-4" id="text-2-5-14">
+
+
+
+
+
+<pre class="example">(req-package rainbow-mode
+             :diminish ""
+             :defer t
+             :init
+             (progn
+               (add-hook 'clevercss-mode-hook 'rainbow-mode)
+               (add-hook 'less-mode-hook 'rainbow-mode)
+               (add-hook 'css-mode-hook 'rainbow-mode)
+               (add-hook 'css-mode-hook 'rainbow-mode)
+               (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+               ))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Navigation</h3>
+<div class="outline-text-3" id="text-2-6">
+
+
+</div>
+
+<div id="outline-container-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> Minibuffer Shortcuts</h4>
+<div class="outline-text-4" id="text-2-6-1">
+
+<p>When selecting a file to visit, // will mean /
+and ~ will mean $HOME regardless of preceding text
+</p>
+
+
+
+<pre class="example">(setq file-name-shadow-tty-properties '(invisible t))
+(file-name-shadow-mode 1)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6-2" class="outline-4">
+<h4 id="sec-2-6-2"><span class="section-number-4">2.6.2</span> Open recently opened files quickly</h4>
+<div class="outline-text-4" id="text-2-6-2">
+
+
+
+
+
+<pre class="example">(req-package recentf
+             :diminish ""
+             :init (setq recentf-max-save-items 500
+                         recentf-max-menu-items 50))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6-3" class="outline-4">
+<h4 id="sec-2-6-3"><span class="section-number-4">2.6.3</span> IDO</h4>
+<div class="outline-text-4" id="text-2-6-3">
+
+
+
+
+
+<pre class="example">(req-package ido-ubiquitous
+             :require (ido recentf)
+             :diminish ""
+             :init 
+             (progn
+               (ido-mode t)
+               (setq ido-confirm-unique-completion nil)
+               (setq ido-create-new-buffer 'always)
+               (setq ido-enable-flex-matching t)
+               (setq ido-ignore-extensions t)
+               (setq ido-use-virtual-buffers t)
+               (ido-ubiquitous-mode 1)
+               ))
+</pre>
+
+
+<p>
+Flx is rather useful, so let's add that too
+</p>
+
+
+
+<pre class="example">(req-package flx-ido
+             :require flx
+             :init
+             (progn
+               (flx-ido-mode 1)
+               ))
+</pre>
+
+
+<p>
+Use ido for recently open files
+</p>
+
+
+
+<pre class="example">(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \\[find-file] a recent file"
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+
+(global-set-key (kbd "H-S-o") 'ido-recentf-open)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-6-4" class="outline-4">
+<h4 id="sec-2-6-4"><span class="section-number-4">2.6.4</span> Smex</h4>
+<div class="outline-text-4" id="text-2-6-4">
+
+
+
+
+
+<pre class="example">(req-package smex
+             :diminish ""
+             :bind (("M-x" . smex)
+                    ("M-X" . smex-major-mode-commands)
+                    ("C-c C-c M-x" . execute-extended-command)))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Buffers</h3>
+<div class="outline-text-3" id="text-2-7">
+
+
+</div>
+
+<div id="outline-container-2-7-1" class="outline-4">
+<h4 id="sec-2-7-1"><span class="section-number-4">2.7.1</span> New Empty Buffer</h4>
+<div class="outline-text-4" id="text-2-7-1">
+
+
+
+
+
+<pre class="example">(defun new-empty-buffer ()
+  "Create a new buffer called untitled(&lt;n&gt;)"
+  (interactive)
+  (let ((newbuf (generate-new-buffer-name "untitled")))
+    (switch-to-buffer newbuf)))
+
+(global-set-key [(hyper n)] 'new-empty-buffer)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-7-2" class="outline-4">
+<h4 id="sec-2-7-2"><span class="section-number-4">2.7.2</span> Indent Whole Buffer</h4>
+<div class="outline-text-4" id="text-2-7-2">
+
+
+
+
+
+<pre class="example">(defun indent-whole-buffer ()
+  "indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-7-3" class="outline-4">
+<h4 id="sec-2-7-3"><span class="section-number-4">2.7.3</span> Kill all buffers except current</h4>
+<div class="outline-text-4" id="text-2-7-3">
+
+
+
+
+
+<pre class="example">(defun kill-all-buffers-except-current ()
+  "Kill all buffers except current buffer."
+  (interactive)
+  (let ((current-buf (current-buffer)))
+    (dolist (buffer (buffer-list))
+      (set-buffer buffer)
+      (unless (eq current-buf buffer)
+        (kill-buffer buffer)))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-7-4" class="outline-4">
+<h4 id="sec-2-7-4"><span class="section-number-4">2.7.4</span> Switching buffers</h4>
+<div class="outline-text-4" id="text-2-7-4">
+
+
+
+
+<pre class="example">(defun custom-ignore-buffer (str)
+  (or
+   ;;buffers I don't want to switch to
+   (string-match "\\*Buffer List\\*" str)
+   (string-match "\\*Compile-Log\\*" str)
+   (string-match "^TAGS" str)
+   (string-match "^\\*Messages\\*$" str)
+   (string-match "^\\*Completions\\*$" str)
+   (string-match "^\\*Flymake error messages\\*$" str)
+   (string-match "^\\*Flycheck error messages\\*$" str)
+   (string-match "^\\*SPEEDBAR\\*" str)
+   (string-match "^ " str)
+
+   ;;Test to see if the window is visible on an existing visible frame.
+   ;;Because I can always ALT-TAB to that visible frame, I never want to
+   ;;Ctrl-TAB to that buffer in the current frame.  That would cause
+   ;;a duplicate top-level buffer inside two frames.
+   (memq str
+         (mapcar
+          (lambda (x)
+            (buffer-name
+             (window-buffer
+              (frame-selected-window x))))
+          (visible-frame-list)))
+   ))
+
+(defun custom-switch-buffer (ls)
+  "Switch to next buffer in ls skipping unwanted ones."
+  (let* ((ptr ls)
+         bf bn go
+         )
+    (while (and ptr (null go))
+      (setq bf (car ptr)  bn (buffer-name bf))
+      (if (null (custom-ignore-buffer bn))        ;skip over
+   (setq go bf)
+        (setq ptr (cdr ptr))
+        )
+      )
+    (if go
+        (switch-to-buffer go))))
+
+(defun custom-prev-buffer ()
+  "Switch to previous buffer in current window."
+  (interactive)
+  (custom-switch-buffer (reverse (buffer-list))))
+
+(global-set-key [(hyper down)] 'custom-prev-buffer)
+
+(defun custom-next-buffer ()
+  "Switch to the other buffer (2nd in list-buffer) in current window."
+  (interactive)
+  (bury-buffer (current-buffer))
+  (custom-switch-buffer (buffer-list)))
+
+(global-set-key [(hyper up)] 'custom-next-buffer)
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Files</h3>
+<div class="outline-text-3" id="text-2-8">
+
+
+</div>
+
+<div id="outline-container-2-8-1" class="outline-4">
+<h4 id="sec-2-8-1"><span class="section-number-4">2.8.1</span> Copy Filename to Clipboard</h4>
+<div class="outline-text-4" id="text-2-8-1">
+
+
+
+
+
+<pre class="example">(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-2" class="outline-4">
+<h4 id="sec-2-8-2"><span class="section-number-4">2.8.2</span> Open Filename with External Program</h4>
+<div class="outline-text-4" id="text-2-8-2">
+
+
+
+
+
+<pre class="example">(defun open-with ()
+  "Simple function that allows us to open the underlying
+file of a buffer in an external program."
+  (interactive)
+  (when buffer-file-name
+    (shell-command (concat
+                    (if (eq system-type 'darwin)
+                        "open"
+                      (read-shell-command "Open current file with: "))
+                    " "
+                    buffer-file-name))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-3" class="outline-4">
+<h4 id="sec-2-8-3"><span class="section-number-4">2.8.3</span> Rename File and Buffer</h4>
+<div class="outline-text-4" id="text-2-8-3">
+
+
+
+
+
+<pre class="example">(defun rename-file-and-buffer ()
+  "Rename the current buffer and file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (message "Buffer is not visiting a file!")
+      (let ((new-name (read-file-name "New name: " filename)))
+        (cond
+         ((vc-backend filename) (vc-rename-file filename new-name))
+         (t
+          (rename-file filename new-name t)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil)))))))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-4" class="outline-4">
+<h4 id="sec-2-8-4"><span class="section-number-4">2.8.4</span> Move File and Buffer</h4>
+<div class="outline-text-4" id="text-2-8-4">
+
+
+
+
+
+<pre class="example">(defun move-buffer-file (dir)
+  "Move both current buffer and file it's visiting to DIR."
+  (interactive "DNew directory: ")
+  (let* ((name (buffer-name))
+         (filename (buffer-file-name))
+         (dir
+          (if (string-match dir "\\(?:/\\|\\\\)$")
+              (substring dir 0 -1) dir))
+         (newname (concat dir "/" name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (copy-file filename newname 1)
+      (delete-file filename)
+      (set-visited-file-name newname)
+      (set-buffer-modified-p nil)
+      t)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-5" class="outline-4">
+<h4 id="sec-2-8-5"><span class="section-number-4">2.8.5</span> Reloading</h4>
+<div class="outline-text-4" id="text-2-8-5">
+
+<p>Always reload the file on disk when it updates
+</p>
+
+
+
+<pre class="example">(global-auto-revert-mode 1)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-6" class="outline-4">
+<h4 id="sec-2-8-6"><span class="section-number-4">2.8.6</span> Autosaves and Backups</h4>
+<div class="outline-text-4" id="text-2-8-6">
+
+<p>Disable autosaving of files
+</p>
+
+
+
+<pre class="example">(setq auto-save-default nil)
+</pre>
+
+
+
+<p>
+Stop making backup files
+</p>
+
+
+
+<pre class="example">(setq make-backup-files nil)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-8-7" class="outline-4">
+<h4 id="sec-2-8-7"><span class="section-number-4">2.8.7</span> Saving</h4>
+<div class="outline-text-4" id="text-2-8-7">
+
+<p>Always append a new line to the file
+</p>
+
+
+
+<pre class="example">(setq require-final-newline t)
+</pre>
+
+
+<p>
+Clean whitespace intelligently on save
+</p>
+
+
+
+<pre class="example">(req-package whitespace-cleanup-mode
+             :diminish ""
+             :init (global-whitespace-cleanup-mode))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Moving Around</h3>
+<div class="outline-text-3" id="text-2-9">
+
+
+</div>
+
+<div id="outline-container-2-9-1" class="outline-4">
+<h4 id="sec-2-9-1"><span class="section-number-4">2.9.1</span> By symbol</h4>
+<div class="outline-text-4" id="text-2-9-1">
+
+
+<p>
+It's extremely useful to be able to move between different occurrences
+of the same symbol.
+</p>
+
+
+
+
+<pre class="example">(global-set-key (kbd "M-n") 'highlight-symbol-next)
+(global-set-key (kbd "M-p") 'highlight-symbol-prev)
+</pre>
+
+
+
+<p>
+Jumping to the first occurrence of the symbol is handy for finding
+where a symbol was imported.
+</p>
+
+
+
+
+<pre class="example">(defun highlight-symbol-first ()
+  "Jump to the first location of symbol at point."
+  (interactive)
+  (push-mark)
+  (eval
+   `(progn
+      (goto-char (point-min))
+      (search-forward-regexp
+       (rx symbol-start ,(thing-at-point 'symbol) symbol-end)
+       nil t)
+      (beginning-of-thing 'symbol))))
+
+(global-set-key (kbd "M-P") 'highlight-symbol-first)
+</pre>
+
+
+
+<p>
+More rarely, it's useful to be able to jump to the last occurrence of
+a symbol.
+</p>
+
+
+
+
+<pre class="example">(defun highlight-symbol-last ()
+  "Jump to the last location of symbol at point."
+  (interactive)
+  (push-mark)
+  (eval
+   `(progn
+      (goto-char (point-max))
+      (search-backward-regexp
+       (rx symbol-start ,(thing-at-point 'symbol) symbol-end)
+       nil t))))
+
+(global-set-key (kbd "M-N") 'highlight-symbol-last)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-2" class="outline-4">
+<h4 id="sec-2-9-2"><span class="section-number-4">2.9.2</span> By indentation</h4>
+<div class="outline-text-4" id="text-2-9-2">
+
+
+<p>
+`C-a' normally moves us to the beginning of the line
+unconditionally. This version is more useful, as it moves to the
+first non-whitespace character if we're already at the beginning of
+the line. Repeated use of `C-a' toggles between these two positions.
+</p>
+
+
+
+
+<pre class="example">(defun beginning-of-line-dwim ()
+  "Toggles between moving point to the first non-whitespace character, and
+the start of the line."
+  (interactive)
+  (let ((start-position (point)))
+    (move-beginning-of-line nil)
+    (when (= (point) start-position)
+        (back-to-indentation))))
+
+(global-set-key (kbd "C-a") 'beginning-of-line-dwim)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-3" class="outline-4">
+<h4 id="sec-2-9-3"><span class="section-number-4">2.9.3</span> By word</h4>
+<div class="outline-text-4" id="text-2-9-3">
+
+<p>Better jumping around by word
+</p>
+<p>
+Move one word forward. Leave the pointer at start of word
+instead of emacs default end of word. Treat _ as part of word
+</p>
+
+
+
+<pre class="example">(defun custom-forward-word ()
+   (interactive)
+   (forward-char 1)
+   (backward-word 1)
+   (forward-word 2)
+   (backward-word 1)
+   (backward-char 1)
+   (cond ((looking-at "_") (forward-char 1) (custom-forward-word))
+         (t (forward-char 1))))
+
+(global-set-key [C-right] 'custom-forward-word)
+</pre>
+
+
+<p>
+Move one word backward. Leave the pointer at start of word
+Treat _ as part of word
+</p>
+
+
+
+<pre class="example">(defun custom-backward-word ()
+   (interactive)
+   (backward-word 1)
+   (backward-char 1)
+   (cond ((looking-at "_") (custom-backward-word))
+         (t (forward-char 1))))
+
+(global-set-key [C-left] 'custom-backward-word)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-9-4" class="outline-4">
+<h4 id="sec-2-9-4"><span class="section-number-4">2.9.4</span> By last change</h4>
+<div class="outline-text-4" id="text-2-9-4">
+
+<p>It can be rather handy to jump to the last changed area in a file.
+</p>
+<p>
+KEYBINDING: "H -"
+</p>
+
+
+
+<pre class="example">(req-package goto-last-change
+             :diminish ""
+             :bind ("H--" . goto-last-change))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="section-number-3">2.10</span> Editing</h3>
+<div class="outline-text-3" id="text-2-10">
+
+
+</div>
+
+<div id="outline-container-2-10-1" class="outline-4">
+<h4 id="sec-2-10-1"><span class="section-number-4">2.10.1</span> Showing changes</h4>
+<div class="outline-text-4" id="text-2-10-1">
+
+<p>Highlight changes to the buffer caused by commands such as ‘undo’, ‘yank’/’yank-pop’, etc.
+</p>
+
+
+
+<pre class="example">(req-package volatile-highlights
+             :diminish volatile-highlights-mode
+             :init (volatile-highlights-mode t))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-2" class="outline-4">
+<h4 id="sec-2-10-2"><span class="section-number-4">2.10.2</span> Tabs</h4>
+<div class="outline-text-4" id="text-2-10-2">
+
+<p>Since I generally develop with languages that adhere to the "off-side" rule
+(eg, Python) always replace tabs with spaces.
+</p>
+
+
+
+<pre class="example">(setq-default indent-tabs-mode nil)
+</pre>
+
+
+
+<p>
+Set tab width to 4 for all buffers
+</p>
+
+
+
+<pre class="example">(setq-default tab-width 4)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-3" class="outline-4">
+<h4 id="sec-2-10-3"><span class="section-number-4">2.10.3</span> Selecting</h4>
+<div class="outline-text-4" id="text-2-10-3">
+
+<p>I use <code>expand-region</code> to help select large blocks of text
+</p>
+
+
+
+<pre class="example">(req-package expand-region
+             :diminish ""
+             :bind (("H-e" . er/expand-region)
+                    ("H-S-e" . er/contract-region)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-4" class="outline-4">
+<h4 id="sec-2-10-4"><span class="section-number-4">2.10.4</span> Moving text</h4>
+<div class="outline-text-4" id="text-2-10-4">
+
+<p>Move selected regions around using the keyboard
+</p>
+
+
+
+<pre class="example">(req-package move-text
+             :diminish ""
+             :bind (("H-S-&lt;up&gt;" . move-text-up)
+                    ("H-S-&lt;down&gt;" . move-text-down)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-5" class="outline-4">
+<h4 id="sec-2-10-5"><span class="section-number-4">2.10.5</span> Overwriting</h4>
+<div class="outline-text-4" id="text-2-10-5">
+
+
+<p>
+When there's an active selection, delete on inserting new text (overwrite)
+</p>
+
+
+
+<pre class="example">(delete-selection-mode +1)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-6" class="outline-4">
+<h4 id="sec-2-10-6"><span class="section-number-4">2.10.6</span> Undo</h4>
+<div class="outline-text-4" id="text-2-10-6">
+
+<p>Standard Emacs undo is kind of confusing. <a href="http://www.dr-qubit.org/emacs.php#undo-tree">undo-tree</a> replaces this with a
+simpler tree structure. It also allows us to visualize the tree directly.
+</p>
+
+
+
+<pre class="example">(req-package undo-tree
+             :ensure undo-tree
+             :diminish ""
+             :init (global-undo-tree-mode)) 
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-7" class="outline-4">
+<h4 id="sec-2-10-7"><span class="section-number-4">2.10.7</span> CUA</h4>
+<div class="outline-text-4" id="text-2-10-7">
+
+
+
+
+
+<pre class="example">(setq cua-enable-cua-keys nil)
+(setq cua-highlight-region-shift-only t)
+(setq cua-toggle-set-mark nil)
+(cua-mode)
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-8" class="outline-4">
+<h4 id="sec-2-10-8"><span class="section-number-4">2.10.8</span> Auto-pair braces</h4>
+<div class="outline-text-4" id="text-2-10-8">
+
+
+
+
+
+<pre class="example">(req-package autopair
+             :diminish autopair-mode
+             :init 
+             (progn
+              (autopair-global-mode)
+              (setq show-paren-delay 0)
+              (show-paren-mode t)
+              (setq show-paren-style 'parenthesis)
+              (add-hook 'term-mode-hook
+                        #'(lambda () 
+                            (setq autopair-dont-activate t)
+                            (autopair-mode -1)))
+              ))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-9" class="outline-4">
+<h4 id="sec-2-10-9"><span class="section-number-4">2.10.9</span> Changing Case</h4>
+<div class="outline-text-4" id="text-2-10-9">
+
+
+
+
+
+<pre class="example">(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+</pre>
+
+
+
+<pre class="example">(defun toggle-letter-case ()
+  "Toggle the letter case of current word or text selection.
+Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
+  (interactive)
+  (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
+    (if (region-active-p)
+        (setq p1 (region-beginning) p2 (region-end))
+      (let ((bds (bounds-of-thing-at-point 'word) ) )
+        (setq p1 (car bds) p2 (cdr bds)) ) )
+
+    (when (not (eq last-command this-command))
+      (save-excursion
+        (goto-char p1)
+        (cond
+         ((looking-at "[[:lower:]][[:lower:]]") (put this-command 'state "all lower"))
+         ((looking-at "[[:upper:]][[:upper:]]") (put this-command 'state "all caps") )
+         ((looking-at "[[:upper:]][[:lower:]]") (put this-command 'state "init caps") )
+         ((looking-at "[[:lower:]]") (put this-command 'state "all lower"))
+         ((looking-at "[[:upper:]]") (put this-command 'state "all caps") )
+         (t (put this-command 'state "all lower") ) ) ) )
+
+    (cond
+     ((string= "all lower" (get this-command 'state))
+      (upcase-initials-region p1 p2) (put this-command 'state "init caps"))
+     ((string= "init caps" (get this-command 'state))
+      (upcase-region p1 p2) (put this-command 'state "all caps"))
+     ((string= "all caps" (get this-command 'state))
+      (downcase-region p1 p2) (put this-command 'state "all lower")) )
+    ))
+
+(global-set-key (kbd "H-k") 'toggle-letter-case)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-10" class="outline-4">
+<h4 id="sec-2-10-10"><span class="section-number-4">2.10.10</span> Sort lines, case insensitive</h4>
+<div class="outline-text-4" id="text-2-10-10">
+
+
+
+
+
+<pre class="example">(defun sort-lines-nocase ()
+  (interactive)
+  (let ((sort-fold-case t))
+    (call-interactively 'sort-lines)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-11" class="outline-4">
+<h4 id="sec-2-10-11"><span class="section-number-4">2.10.11</span> Replace string, case sensitive</h4>
+<div class="outline-text-4" id="text-2-10-11">
+
+
+
+
+
+<pre class="example">(defun replace-string-withcase ()
+  (interactive)
+  (let ((case-fold-search nil))
+    (call-interactively 'replace-string)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-12" class="outline-4">
+<h4 id="sec-2-10-12"><span class="section-number-4">2.10.12</span> Fix/replace "Smart Quotes"</h4>
+<div class="outline-text-4" id="text-2-10-12">
+
+
+
+
+
+<pre class="example">(defun fix-quotes (beg end)
+  "Replace 'smart quotes' in buffer or region with ascii quotes."
+  (interactive "r")
+  (format-replace-strings '(("\x201C" . "\"")
+                            ("\x201D" . "\"")
+                            ("\x2018" . "'")
+                            ("\x2019" . "'"))
+                          nil beg end))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-13" class="outline-4">
+<h4 id="sec-2-10-13"><span class="section-number-4">2.10.13</span> Remove <sup>M</sup></h4>
+<div class="outline-text-4" id="text-2-10-13">
+
+
+
+
+
+<pre class="example">(defun remove-control-m ()
+  (interactive)
+  (goto-char 1)
+  (while (search-forward "
+" nil t)
+    (replace-match "" t nil)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-14" class="outline-4">
+<h4 id="sec-2-10-14"><span class="section-number-4">2.10.14</span> Wrap region</h4>
+<div class="outline-text-4" id="text-2-10-14">
+
+<p><code>wrap-region</code> is a minor mode that wraps a region with
+punctuations. For tagged markup modes, such as HTML and XML, it
+wraps with tags.
+</p>
+
+
+
+<pre class="example">(req-package wrap-region
+             :diminish ""
+             :init
+             (progn
+               (wrap-region-global-mode t)
+               (setq wrap-region-keep-mark t)
+               (add-to-list 'wrap-region-tag-active-modes 'sgml-mode)
+               (defadvice wrap-region-trigger (before disable-autopair activate)
+                 (if (region-active-p)
+                     (autopair-global-mode -1)))
+               (defadvice wrap-region-trigger (after re-enable-autopair activate)
+                 (if (region-active-p)
+                     (autopair-global-mode 1)))
+               ))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-15" class="outline-4">
+<h4 id="sec-2-10-15"><span class="section-number-4">2.10.15</span> Edit multiple regions at the same time</h4>
+<div class="outline-text-4" id="text-2-10-15">
+
+
+
+
+
+<pre class="example">(req-package iedit)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-16" class="outline-4">
+<h4 id="sec-2-10-16"><span class="section-number-4">2.10.16</span> Rename SGML tag</h4>
+<div class="outline-text-4" id="text-2-10-16">
+
+<p>I work with XML and XSL a lot, so being able to quickly rename a tag is crucial.
+</p>
+
+
+
+<pre class="example">(add-hook 'sgml-mode-hook
+  (lambda ()
+    (require 'rename-sgml-tag)
+    (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-10-17" class="outline-4">
+<h4 id="sec-2-10-17"><span class="section-number-4">2.10.17</span> Zen-coding</h4>
+<div class="outline-text-4" id="text-2-10-17">
+
+<p>Major mode for quickly creating HTML fragments from a CSS-like syntax
+</p>
+
+
+
+<pre class="example">(req-package zencoding-mode
+             :diminish ""
+             :init (add-hook 'sgml-mode-hook 'zencoding-mode))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-11" class="outline-3">
+<h3 id="sec-2-11"><span class="section-number-3">2.11</span> Search/replace</h3>
+<div class="outline-text-3" id="text-2-11">
+
+
+</div>
+
+<div id="outline-container-2-11-1" class="outline-4">
+<h4 id="sec-2-11-1"><span class="section-number-4">2.11.1</span> Showing search results</h4>
+<div class="outline-text-4" id="text-2-11-1">
+
+<p>Display 'current match/total matches' in the mode-line in various search modes
+</p>
+
+
+
+<pre class="example">(req-package anzu
+             :diminish anzu-mode
+             :init (global-anzu-mode +1))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-11-2" class="outline-4">
+<h4 id="sec-2-11-2"><span class="section-number-4">2.11.2</span> Regex search/replace</h4>
+<div class="outline-text-4" id="text-2-11-2">
+
+<p>I'm not a big fan of the regular expression syntax in emacs,
+so I install visual-regexp-steroids to use Python's regex model.
+</p>
+
+
+
+<pre class="example">(req-package visual-regexp-steroids
+             :require visual-regexp
+             :diminish ""
+             :bind (("C-c r" . vr/replace)
+                    ("C-c q" . vr/query-replace)
+                    ("C-r" . vr/isearch-backward)
+                    ("C-s" . vr/isearch-forward)))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-12" class="outline-3">
+<h3 id="sec-2-12"><span class="section-number-3">2.12</span> Checking</h3>
+<div class="outline-text-3" id="text-2-12">
+
+
+</div>
+
+<div id="outline-container-2-12-1" class="outline-4">
+<h4 id="sec-2-12-1"><span class="section-number-4">2.12.1</span> Flycheck</h4>
+<div class="outline-text-4" id="text-2-12-1">
+
+
+
+
+
+<pre class="example">(req-package flycheck
+             :require (dash s f exec-path-from-shell flycheck-color-mode-line)
+             :ensure flycheck
+             :diminish (global-flycheck-mode . " ✓ ")
+             :defer t
+             :init
+             (progn
+               (add-hook 'after-init-hook 'global-flycheck-mode)
+               (eval-after-load "flycheck"
+                 '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+               ))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-13" class="outline-3">
+<h3 id="sec-2-13"><span class="section-number-3">2.13</span> Killing</h3>
+<div class="outline-text-3" id="text-2-13">
+
+
+</div>
+
+<div id="outline-container-2-13-1" class="outline-4">
+<h4 id="sec-2-13-1"><span class="section-number-4">2.13.1</span> Browse Kill Ring</h4>
+<div class="outline-text-4" id="text-2-13-1">
+
+
+<p>
+KEYBINDING: "M y"
+</p>
+
+
+
+<pre class="example">(req-package browse-kill-ring
+             :init (browse-kill-ring-default-keybindings))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-14" class="outline-3">
+<h3 id="sec-2-14"><span class="section-number-3">2.14</span> Windows</h3>
+<div class="outline-text-3" id="text-2-14">
+
+<p>Enable C-c &lt;left&gt; to get back the previous window split
+</p>
+
+
+
+<pre class="example">(winner-mode 1)
+</pre>
+
+
+<p>
+Allow switching between windows with CTRL+Tab
+</p>
+
+
+<pre class="example">(global-set-key [C-tab] 'other-window)
+</pre>
+
+
+
+</div>
+
+<div id="outline-container-2-14-1" class="outline-4">
+<h4 id="sec-2-14-1"><span class="section-number-4">2.14.1</span> Workgroups</h4>
+<div class="outline-text-4" id="text-2-14-1">
+
+<p>Workgroups are a really useful way to manage window layout.
+</p>
+
+
+
+<pre class="example">(req-package workgroups
+             :diminish ""
+             :init
+             (progn
+               (defun wg-mode-line-add-display () nil)
+               (defun wg-mode-line-remove-display () nil)
+               (setq wg-prefix-key (kbd "C-z")
+                     wg-mode-line-on nil
+                     wg-file (concat dotfiles-dir "/workgroups")
+                     wg-use-faces nil
+                     wg-morph-on nil)
+               (workgroups-mode 1)
+               ))
+</pre>
+
+
+<p>
+Note: I disable wg-mode-line as it conflicts with Powerline.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-15" class="outline-3">
+<h3 id="sec-2-15"><span class="section-number-3">2.15</span> Version Control</h3>
+<div class="outline-text-3" id="text-2-15">
+
+
+</div>
+
+<div id="outline-container-2-15-1" class="outline-4">
+<h4 id="sec-2-15-1"><span class="section-number-4">2.15.1</span> Seeing changes when working with Git</h4>
+<div class="outline-text-4" id="text-2-15-1">
+
+
+
+
+
+<pre class="example">(req-package git-gutter+
+             :diminish ""
+             :init (global-git-gutter+-mode t))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-15-2" class="outline-4">
+<h4 id="sec-2-15-2"><span class="section-number-4">2.15.2</span> Magit for working with Git</h4>
+<div class="outline-text-4" id="text-2-15-2">
+
+
+
+
+
+<pre class="example">(req-package magit)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-15-3" class="outline-4">
+<h4 id="sec-2-15-3"><span class="section-number-4">2.15.3</span> Monky for working with Mercirual</h4>
+<div class="outline-text-4" id="text-2-15-3">
+
+<p>By default monky spawns a seperate hg process for every command which  will be slow 
+if the repo contains lot of changes.
+</p>
+<p>
+If `monky-process-type' is set to cmdserver then monky will spawn a single
+cmdserver and communicate over pipe.
+</p>
+<p>
+Available only on mercurial versions 1.9 or higher
+</p>
+
+
+
+<pre class="example">(req-package monky
+             :init (setq monky-process-type 'cmdserver))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-16" class="outline-3">
+<h3 id="sec-2-16"><span class="section-number-3">2.16</span> Terminal</h3>
+<div class="outline-text-3" id="text-2-16">
+
+
+</div>
+
+<div id="outline-container-2-16-1" class="outline-4">
+<h4 id="sec-2-16-1"><span class="section-number-4">2.16.1</span> Colours</h4>
+<div class="outline-text-4" id="text-2-16-1">
+
+<p>Fix colours in ansi-term
+</p>
+
+
+
+<pre class="example">(setq system-uses-terminfo nil)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-16-2" class="outline-4">
+<h4 id="sec-2-16-2"><span class="section-number-4">2.16.2</span> ZSH</h4>
+<div class="outline-text-4" id="text-2-16-2">
+
+<p>Always use zshell
+</p>
+
+
+
+<pre class="example">(setq explicit-shell-file-name "/bin/zsh")
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-16-3" class="outline-4">
+<h4 id="sec-2-16-3"><span class="section-number-4">2.16.3</span> Managing Multiple Terminal instances</h4>
+<div class="outline-text-4" id="text-2-16-3">
+
+
+
+
+
+<pre class="example">(req-package multi-term)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-16-4" class="outline-4">
+<h4 id="sec-2-16-4"><span class="section-number-4">2.16.4</span> Tramp</h4>
+<div class="outline-text-4" id="text-2-16-4">
+
+
+
+
+
+<pre class="example">(req-package tramp
+             :init (setq tramp-default-method "ssh"))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-17" class="outline-3">
+<h3 id="sec-2-17"><span class="section-number-3">2.17</span> Dired</h3>
+<div class="outline-text-3" id="text-2-17">
+
+
+<p>
+Handle zip compression.
+</p>
+
+
+
+<pre class="example">(eval-after-load "dired-aux"
+  '(add-to-list 'dired-compress-file-suffixes
+                '("\\.zip\\'" ".zip" "unzip")))
+</pre>
+
+
+
+<p>
+Make sizes human-readable by default, sort version numbers
+correctly, and put dotfiles and capital-letters first.
+</p>
+
+
+
+<pre class="example">(setq-default dired-listing-switches "-aGglhvop")
+(setq dired-recursive-copies 'always)
+</pre>
+
+
+
+<p>
+Allow running multiple async commands simultaneously
+</p>
+
+
+
+<pre class="example">(defadvice shell-command (after shell-in-new-buffer (command &amp;optional output-buffer error-buffer))
+  (when (get-buffer "*Async Shell Command*")
+    (with-current-buffer "*Async Shell Command*"
+      (rename-uniquely))))
+(ad-activate 'shell-command)
+</pre>
+
+
+<p>
+Fix problems with <code>ls</code> on OS X
+</p>
+
+
+
+<pre class="example">(when (eq system-type 'darwin)
+  (req-package ls-lisp
+               :init (setq ls-lisp-use-insert-directory-program nil)))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-18" class="outline-3">
+<h3 id="sec-2-18"><span class="section-number-3">2.18</span> Org</h3>
+<div class="outline-text-3" id="text-2-18">
+
+
+</div>
+
+<div id="outline-container-2-18-1" class="outline-4">
+<h4 id="sec-2-18-1"><span class="section-number-4">2.18.1</span> Bullets</h4>
+<div class="outline-text-4" id="text-2-18-1">
+
+
+
+
+<pre class="example">(req-package org-bullets
+             :diminish ""
+             :init (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-19" class="outline-3">
+<h3 id="sec-2-19"><span class="section-number-3">2.19</span> Key bindings</h3>
+<div class="outline-text-3" id="text-2-19">
+
+
+</div>
+
+<div id="outline-container-2-19-1" class="outline-4">
+<h4 id="sec-2-19-1"><span class="section-number-4">2.19.1</span> Mac</h4>
+<div class="outline-text-4" id="text-2-19-1">
+
+<p>Set Option as Meta, and add Cmd as "Hyper"
+</p>
+
+
+
+<pre class="example">(setq mac-command-modifier 'alt mac-option-modifier 'meta)
+(setq mac-command-modifier 'hyper)
+</pre>
+
+
+<p>
+Undo/redo
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper z)] 'undo)
+(global-set-key [(hyper shift z)] 'redo)
+</pre>
+
+
+<p>
+Select all
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper a)] 'mark-whole-buffer)
+</pre>
+
+
+<p>
+Cut/copy/paste
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper x)] 'kill-region)
+(global-set-key [(hyper c)] 'kill-ring-save)
+(global-set-key [(hyper v)] 'yank)
+</pre>
+
+
+
+<p>
+Open/save/close/quit
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper o)] 'find-file)
+(global-set-key [(hyper s)] 'save-buffer)
+(global-set-key [(hyper w)]
+                (lambda () (interactive) (kill-buffer (current-buffer))))
+(global-set-key [(hyper q)] 'save-buffers-kill-emacs)
+</pre>
+
+
+<p>
+Minimise/hide
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper m)] 'iconify-frame)
+(global-set-key [(hyper h)] 'ns-do-hide-emacs)
+</pre>
+
+
+<p>
+Search
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper f)] 'isearch-forward)
+(global-set-key [(hyper g)] 'isearch-repeat-forward)
+</pre>
+
+
+<p>
+Moving the cursor
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper left)] 'beginning-of-line)
+(global-set-key [(hyper right)] 'end-of-line)
+(global-set-key [(hyper t)] 'beginning-of-buffer)
+(global-set-key [(hyper b)] 'end-of-buffer)
+</pre>
+
+
+<p>
+Changing case
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper u)] 'upcase-region)
+(global-set-key [(hyper l)] 'downcase-region)
+</pre>
+
+
+<p>
+Goto line
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper j)] 'goto-line)
+</pre>
+
+
+<p>
+Remove the space in a selection to join lines
+</p>
+
+
+
+<pre class="example">(global-set-key (kbd "H-S-&lt;backspace&gt;") 'join-line)
+</pre>
+
+
+<p>
+Repeat the last command
+</p>
+
+
+
+<pre class="example">(global-set-key [(hyper shift r)] 'repeat)
+</pre>
+
+
+<p>
+Use the Escape key to escape the keyboard
+</p>
+
+
+
+<pre class="example">(define-key local-function-key-map [cancel] [H-Esc])
+(global-set-key (kbd "&lt;escape&gt;") 'keyboard-escape-quit)
+</pre>
+
+
+<p>
+Allow euro to be entered
+</p>
+
+
+
+<pre class="example">(global-set-key (kbd "M-2") '(lambda () (interactive) (insert "€")))
+</pre>
+
+
+<p>
+Allow hash to be entered
+</p>
+
+
+
+<pre class="example">(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+</pre>
+
+
+<p>
+Text resizing
+</p>
+
+
+
+<pre class="example">(global-set-key (kbd "H-=") 'text-scale-increase)
+(global-set-key (kbd "H--") 'text-scale-decrease)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-19-2" class="outline-4">
+<h4 id="sec-2-19-2"><span class="section-number-4">2.19.2</span> Key chords</h4>
+<div class="outline-text-4" id="text-2-19-2">
+
+
+
+
+<pre class="example">(req-package key-chord
+             :init 
+             (progn
+               (key-chord-mode 1)
+               (key-chord-define-global "qw" 'execute-extended-command)
+               (key-chord-define-global "o0" 'find-file)
+               (key-chord-define-global "r4" 'replace-string)
+               (key-chord-define-global "rf" 'vr/query-replace)
+               ))
+</pre>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-20" class="outline-3">
+<h3 id="sec-2-20"><span class="section-number-3">2.20</span> Programming</h3>
+<div class="outline-text-3" id="text-2-20">
+
+
+</div>
+
+<div id="outline-container-2-20-1" class="outline-4">
+<h4 id="sec-2-20-1"><span class="section-number-4">2.20.1</span> Common</h4>
+<div class="outline-text-4" id="text-2-20-1">
+
+<p>Enable CamelCase awareness for all programming modes
+</p>
+
+
+
+<pre class="example">(add-hook 'prog-mode-hook 'subword-mode)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-20-2" class="outline-4">
+<h4 id="sec-2-20-2"><span class="section-number-4">2.20.2</span> Python</h4>
+<div class="outline-text-4" id="text-2-20-2">
+
+
+<p>
+I also occasionally use Jinja for templating
+</p>
+
+
+
+<pre class="example">(req-package jinga2-mode
+             :diminish ""
+             :mode ("\\.jinja2\\'" . jinja2-mode))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-20-3" class="outline-4">
+<h4 id="sec-2-20-3"><span class="section-number-4">2.20.3</span> XML</h4>
+<div class="outline-text-4" id="text-2-20-3">
+
+
+
+
+
+<pre class="example">(req-package xml-mode
+             :diminish ""
+             :mode ("\\.xsd\\'" . xml-mode))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-20-4" class="outline-4">
+<h4 id="sec-2-20-4"><span class="section-number-4">2.20.4</span> XSL-FO</h4>
+<div class="outline-text-4" id="text-2-20-4">
+
+
+
+
+
+<pre class="example">(req-package xml-mode
+             :diminish ""
+             :mode ("\\.fo\\'" . xml-mode))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-20-5" class="outline-4">
+<h4 id="sec-2-20-5"><span class="section-number-4">2.20.5</span> XQuery</h4>
+<div class="outline-text-4" id="text-2-20-5">
+
+
+
+
+
+<pre class="example">(req-package xquery-mode
+             :diminish ""
+             :mode ("\\.xq\\'" . xquery-mode))
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-2-20-6" class="outline-4">
+<h4 id="sec-2-20-6"><span class="section-number-4">2.20.6</span> YAML</h4>
+<div class="outline-text-4" id="text-2-20-6">
+
+
+
+
+
+<pre class="example">(req-package yaml-mode
+             :diminish ""
+             :init
+             (progn
+               (add-to-list 'auto-mode-alist '("\\.ya?ml" . yaml-mode))
+               (add-to-list 'auto-mode-alist '("\\.ylog" . yaml-mode))
+               (add-to-list 'auto-mode-alist '("\\.yamlog" . yaml-mode))
+               (add-hook 'yaml-mode-hook
+                         '(lambda () (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+               ))
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-21" class="outline-3">
+<h3 id="sec-2-21"><span class="section-number-3">2.21</span> Utilities</h3>
+<div class="outline-text-3" id="text-2-21">
+
+
+</div>
+
+<div id="outline-container-2-21-1" class="outline-4">
+<h4 id="sec-2-21-1"><span class="section-number-4">2.21.1</span> Find convenient unbound keystrokes</h4>
+<div class="outline-text-4" id="text-2-21-1">
+
+
+
+
+
+<pre class="example">(req-package unbound)
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2-22" class="outline-3">
+<h3 id="sec-2-22"><span class="section-number-3">2.22</span> Finalising</h3>
+<div class="outline-text-3" id="text-2-22">
+
+
+<p>
+Kick-off the package install.
+</p>
+
+
+
+<pre class="example">(req-package-finish)
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2014-03-05T11:07+0000</p>
+<p class="author">Author: Phillip B Oldham</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
