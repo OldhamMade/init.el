@@ -42,14 +42,10 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "PYTHONPATH"))
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
 (package-initialize)
 
 (defadvice package-install (before maybe-refresh-packages activate)
@@ -72,7 +68,6 @@
                ))
 
 (setq user-full-name "Phillip B Oldham"
-      user-mail-address "phillip.oldham@gmail.com"
       change-log-default-name "CHANGELOG")
 
 (add-to-list 'custom-theme-load-path (expand-file-name "themes" dotfiles-dir))
@@ -100,10 +95,6 @@
 (req-package powerline
              :diminish ""
              :init (powerline-default-theme))
-
-(add-hook 'emacs-lisp-mode-hook
-  (lambda()
-    (setq mode-name "el")))
 
 (global-linum-mode 1)
 (setq linum-format "%4d")
@@ -487,7 +478,7 @@
   (interactive)
   (when buffer-file-name
     (kill-new (file-truename buffer-file-name))
-    (message (format "%s" (file-truename buffer-file-name)))
+    (message (format "Path: %s (copied to kill-ring)" (file-truename buffer-file-name)))
     ))
 
 (defun copy-file-name-to-clipboard ()
@@ -750,6 +741,10 @@ Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
 (req-package multiple-cursors
              :diminish "")
 
+(req-package fancy-narrow
+             :diminish ""
+             :init (fancy-narrow-mode t))
+
 (req-package anzu
              :diminish anzu-mode
              :init (global-anzu-mode +1))
@@ -799,9 +794,9 @@ Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
                (workgroups-mode 1)
                ))
 
-(req-package git-gutter+
+(req-package git-gutter-fringe
              :diminish ""
-             :init (global-git-gutter+-mode t))
+             :init (global-git-gutter-mode t))
 
 (req-package magit)
 
@@ -897,6 +892,10 @@ Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
 (req-package markdown-mode
              :diminish ""
              :mode ("\\.md\\'" . markdown-mode))
+
+(req-package fixmee
+             :diminish ""
+             :init (global-fixmee-mode 1))
 
 (req-package unbound)
 

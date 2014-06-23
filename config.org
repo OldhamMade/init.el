@@ -59,7 +59,6 @@ Code I've written (this org file, init.el, and files in `personal`) is MIT licen
 Things to add into this config, and modes to learn to use effectively:
 
 - dired+
-- rst-mode
 - guide-key
 - easy-kill
 - rebind M-<left|right> to S-M-<left|right> in the following modes (I use M-<left|right> for jumping between words):
@@ -149,14 +148,6 @@ Allow answering 'Yes or No' prompts with Y or N
 (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-Set the exec path from shell on mac systems
-
-#+BEGIN_SRC emacs-lisp :tangle yes
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "PYTHONPATH"))
-#+END_SRC
-
 ** Package Management
 *** Sources
 
@@ -166,8 +157,8 @@ repositories. Initalize all the package repos here, so we can use them later.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
 (package-initialize)
 #+END_SRC
 
@@ -214,6 +205,15 @@ Some very basic settings for my environment
 (setq user-full-name "Phillip B Oldham"
       change-log-default-name "CHANGELOG")
 #+END_SRC
+
+Set the exec path from shell on mac systems
+
+# +BEGIN_SRC emacs-lisp :tangle yes
+# (req-package exec-path-from-shell)
+# (when (memq window-system '(mac ns))
+#   (exec-path-from-shell-initialize)
+#   (exec-path-from-shell-copy-env "PYTHONPATH"))
+# +END_SRC
 
 ** Interface
 *** Theme
@@ -1417,10 +1417,15 @@ in a region with a single space
 #+END_SRC
 
 *** Multiple cursors
-
 #+BEGIN_SRC emacs-lisp :tangle yes
 (req-package multiple-cursors
              :diminish "")
+#+END_SRC
+*** Fancy narrowing
+#+BEGIN_SRC  emacs-lisp :tangle yes
+(req-package fancy-narrow
+             :diminish ""
+             :init (fancy-narrow-mode t))
 #+END_SRC
 ** Search/replace
 *** Showing search results
@@ -1518,9 +1523,9 @@ Note: I disable wg-mode-line as it conflicts with Powerline.
 *** Seeing changes when working with Git
 
 #+BEGIN_SRC emacs-lisp :tangle yes
-(req-package git-gutter+
+(req-package git-gutter-fringe
              :diminish ""
-             :init (global-git-gutter+-mode t))
+             :init (global-git-gutter-mode t))
 #+END_SRC
 
 *** Magit for working with Git
@@ -1738,13 +1743,19 @@ I occasionally use Jinja for templating
 #+END_SRC
 
 *** Markdown
-
 #+BEGIN_SRC emacs-lisp :tangle yes
 (req-package markdown-mode
              :diminish ""
              :mode ("\\.md\\'" . markdown-mode))
 #+END_SRC
+*** Fixmee
+Allow navigation via "fixme" commends in code
 
+#+BEGIN_SRC  emacs-lisp :tangle yes
+(req-package fixmee
+             :diminish ""
+             :init (global-fixmee-mode 1))
+#+END_SRC
 ** Utilities
 *** Find convenient unbound keystrokes
 
